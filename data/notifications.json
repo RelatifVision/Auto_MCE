@@ -1,0 +1,17 @@
+[
+    {
+        "id": 1,
+        "message": "Confirmar disponibilidad para el 10 de noviembre",
+        "date": "2025-01-30"
+    },
+    {
+        "id": 2,
+        "message": "Revisar presupuesto pendiente para el cliente X",
+        "date": "2025-01-31"
+    },
+    {
+        "id": 3,
+        "message": "Enviar liquidación a la empresa Y",
+        "date": "2025-02-01"
+    }
+]

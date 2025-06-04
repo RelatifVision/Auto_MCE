@@ -1,0 +1,16 @@
+Para conseguir las apis de whatsapp en meta vamos por este paso pero tenemos un conflicto como habría que proceder:
+
+
+
+1. Generar el Token de Acceso
+Haz clic en "Generate access token".
+Copia el Access Token que se genera.
+Nota: Este es un token temporal (expira en 24 horas). Luego necesitarás uno permanente.
+2. Seleccionar un Número de Destino
+En la sección "To", elige un número de destino para hacer pruebas.
+Debe estar en formato internacional (+34, +51, +57, etc.).
+Importante: El número debe estar registrado en WhatsApp y haber aceptado recibir mensajes de prueba.
+
+El conflicto es este:
+
+Este número está registrado en una cuenta de WhatsApp existente. Para usarlo, desvincúlalo de la cuenta existente. Después, vuelve a esta página e introduce el número de nuevo. Nota: El número puede tardar hasta tres minutos en estar disponible. Más información

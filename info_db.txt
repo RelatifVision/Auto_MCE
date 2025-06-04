@@ -1,0 +1,16 @@
+En personalizar evento quisiera que seleccionando la empresa en el casillero obtenida del database se asocie el color en el calendar y las tarifas, asi pudiendo calcular según el nº de horas de ese día selecionado calcular tarifa aunque se pueda modificar
+
+
+hoja 1: 'datos_empresa' el excell es tal que así
+
+ID_Empresa | Nombre_Empresa | CIF | Direccion | Color| Email | Telefono|
+
+hoja 2: 'tarifa_empresa' el excell es tal que así
+
+ID_Empresa | Jornada | Precio_Jornada | Precio_hora_(xtra) | N_horas| 
+
+hoja 3: 'datos_cooperativas' el excell es tal que así
+
+| ID_Coop | Nombre_Cooperativa |  Metodo_de_pago | Mails | Telefono | CIF |
+
+#FA8383

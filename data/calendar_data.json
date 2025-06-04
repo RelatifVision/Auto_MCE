@@ -1,0 +1,149 @@
+[
+    {
+        "date": "2025-01-05",
+        "company": "Telepixel S.L.U.",
+        "color": "#6F078C",
+        "hours": "23:30-06:00",
+        "rate": "120\u20ac"
+    },
+    {
+        "date": "2025-01-12",
+        "company": "Telepixel S.L.U.",
+        "color": "#6F078C",
+        "hours": "00:00 - 07:30",
+        "rate": "140\u20ac"
+    },
+    {
+        "date": "2025-01-19",
+        "company": "VisualMax S.L.",
+        "color": "#B51F1F",
+        "hours": "09:30 - 18:30",
+        "rate": "220\u20ac"
+    },
+    {
+        "date": "2025-01-20",
+        "company": "Telepixel S.L.U.",
+        "color": "#6F078C",
+        "hours": "00:00 - 06:00",
+        "rate": "120\u20ac"
+    },
+    {
+        "date": "2025-01-20",
+        "company": "VisualMax S.L.",
+        "color": "#B51F1F",
+        "hours": "08:30 - 21:30",
+        "rate": "320\u20ac"
+    },
+    {
+        "date": "2025-01-21",
+        "company": "VisualMax S.L.",
+        "color": "#B51F1F",
+        "hours": "09:30 - 23:00",
+        "rate": "345\u20ac"
+    },
+    {
+        "date": "2025-01-22",
+        "company": "VisualMax S.L.",
+        "color": "#B51F1F",
+        "hours": "08:30 - 19:30",
+        "rate": "270\u20ac"
+    },
+    {
+        "date": "2025-01-23",
+        "company": "VisualMax S.L.",
+        "color": "#B51F1F",
+        "hours": "08:30 - 19:00",
+        "rate": "270\u20ac"
+    },
+    {
+        "date": "2025-01-24",
+        "company": "VisualMax S.L.",
+        "color": "#B51F1F",
+        "hours": "09:00 - 19:00",
+        "rate": "245\u20ac"
+    },
+    {
+        "date": "2025-01-25",
+        "company": "VisualMax S.L.",
+        "color": "#B51F1F",
+        "hours": "09:00 - 20:00",
+        "rate": "270\u20ac"
+    },
+    {
+        "date": "2025-01-26",
+        "company": "VisualMax S.L.",
+        "color": "#B51F1F",
+        "hours": "09:00 - 19:00",
+        "rate": "245\u20ac"
+    },
+    {
+        "date": "2025-01-27",
+        "company": "Ninguno",
+        "color": "FFFFFF",
+        "hours": "",
+        "rate": ""
+    },
+    {
+        "date": "2025-02-02",
+        "company": "Telepixel S.L.U.",
+        "color": "#6F078C",
+        "hours": "23:30-06:00",
+        "rate": "120\u20ac"
+    },
+    {
+        "date": "2025-02-09",
+        "company": "Telepixel S.L.U.",
+        "color": "#6F078C",
+        "hours": "23:30-06:00",
+        "rate": "120\u20ac"
+    },
+    {
+        "date": "2025-02-16",
+        "company": "Telepixel S.L.U.",
+        "color": "#6F078C",
+        "hours": "23:30-06:00",
+        "rate": "120\u20ac"
+    },
+    {
+        "date": "2025-02-23",
+        "company": "Telepixel S.L.U.",
+        "color": "#6F078C",
+        "hours": "23:30-06:00",
+        "rate": "120\u20ac"
+    },
+    {
+        "date": "2025-03-02",
+        "company": "Telepixel S.L.U.",
+        "color": "#6F078C",
+        "hours": "23:30-06:00",
+        "rate": "120\u20ac"
+    },
+    {
+        "date": "2025-03-09",
+        "company": "Telepixel S.L.U.",
+        "color": "#6F078C",
+        "hours": "23:30-06:00",
+        "rate": "120\u20ac"
+    },
+    {
+        "date": "2025-03-16",
+        "company": "Telepixel S.L.U.",
+        "color": "#6F078C",
+        "hours": "23:30-06:00",
+        "rate": "120\u20ac"
+    },
+    {
+        "date": "2025-03-23",
+        "company": "Telepixel S.L.U.",
+        "color": "#6F078C",
+        "hours": "23:30-06:00",
+        "rate": "120\u20ac"
+    },
+    {
+        "date": "2025-03-30",
+        "company": "Telepixel S.L.U.",
+        "color": "#6F078C",
+        "hours": "23:30-06:00",
+        "rate": "120\u20ac"
+    }
+]
