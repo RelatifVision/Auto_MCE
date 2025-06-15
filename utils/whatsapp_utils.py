@@ -8,32 +8,9 @@ from models.chat_parser import extract_relevant_messages, generate_summary
 from utils.gui_utils import create_button
 from utils.styles import BUTTON_STYLE, ICON_DIR
 from utils.file_utils import select_files, clear_whatsapp_message
-from models.chat_parser import load_chats
-
-def load_chats():
-    """
-    Cargar lista de chats desde archivos .txt en la carpeta 'data/chats'.
-    """
-    chats_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../data/chats"))
-    chat_files = [f for f in os.listdir(chats_dir) if f.endswith(".txt")]
-    
-    chats = []
-    for filename in chat_files:
-        chat_path = os.path.join(chats_dir, filename)
-        with open(chat_path, "r", encoding="utf-8") as file:
-            content = file.read()
-            chat_name = os.path.splitext(filename)[0]
-            chats.append({
-                "filename": filename,
-                "nombre": chat_name,
-                "contenido": content
-            })
-    return chats
+from models.chat_parser import load_chats, highlight_keywords, process_chat
 
 def load_and_display_data(main_window):
-    """
-    Cargar y mostrar los datos de los chats.
-    """
     try:
         main_window.chats = load_chats()
         main_window.chat_list.clear()
@@ -49,17 +26,12 @@ def load_and_display_data(main_window):
 def update_chat_content(main_window, current_item, list_widget):
     if current_item:
         selected_chat_name = current_item.text()
-        
-        # Actualizar contenido del chat solo si es el listado superior
-        if list_widget == main_window.chat_list:
-            for chat in main_window.chats:
-                if chat["nombre"] == selected_chat_name:
-                    main_window.chat_content.setPlainText(chat["contenido"])
-                    break
-                
-        # Actualizar destinatario solo si es el listado inferior
-        if list_widget == main_window.chat_list_send:
-            main_window.destination_input.setText(selected_chat_name)
+        for chat in main_window.chats:
+            if chat["nombre"] == selected_chat_name:
+                # Pasar solo los mensajes, no todo el chat
+                formatted_chat = process_chat(chat["messages"])  
+                main_window.chat_content.setHtml(formatted_chat)  
+                break
 
 def send_wpp(main_window):
     message = main_window.message_input.toPlainText()
