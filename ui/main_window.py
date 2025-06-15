@@ -24,7 +24,7 @@ from utils.excel_utils import load_dataframe
 from utils.file_utils import select_files, clear_whatsapp_message 
 from utils.gui_utils import create_button
 from utils.whatsapp_utils import send_wpp, update_chat_content, confirm_wpp, load_chats, load_and_display_data, reject_wpp
-from models.chat_parser import load_chats, is_relevant_message, extract_relevant_messages, nlp
+from models.chat_parser import load_chats, is_relevant_message, extract_relevant_messages, nlp, process_chat
 from utils.whatsapp_utils import clear_whatsapp_message
 
 
@@ -39,10 +39,12 @@ class MainWindow(QMainWindow):
         self.setStyleSheet("background-color: #212121;")
         
         # Widgets necesarios para WhatsApp
-        self.chat_content = QTextEdit()  
+        self.chat_content = QTextEdit()
         self.chat_content.setReadOnly(True)
-        self.chat_content.setStyleSheet("QTextEdit { background-color: #333333; color: white; }")
-        
+        self.chat_content.setAcceptRichText(True)  # Permitir HTML
+        # self.chat_content.setStyleSheet(
+        #     "QTextEdit { background-color: #333333; color: white; }"  # <<--- Fondo gris y texto blanco
+        # )
         # Campo de destinatario
         self.destination_input = QLineEdit()
         self.destination_input.setPlaceholderText("Destinatario seleccionado")
@@ -224,6 +226,16 @@ class MainWindow(QMainWindow):
         main_layout.addLayout(button_layout)
         screen.setLayout(main_layout)
         return screen
+
+    def update_chat_content(self, current_item, list_widget):
+        if current_item:
+            selected_chat_name = current_item.text()
+            for chat in self.chats:
+                if chat["nombre"] == selected_chat_name:
+                    # Procesar el contenido usando el nuevo formato
+                    formatted_chat = process_chat(chat["contenido"])  
+                    self.chat_content.setHtml(formatted_chat)  
+                    break
  
     # __ Funciones de navegación __#
     
