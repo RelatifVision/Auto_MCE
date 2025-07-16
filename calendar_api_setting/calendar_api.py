@@ -37,8 +37,8 @@ def create_event_api(params, calendar_window=None):
 
     evento = {
         "summary": params["summary"],
-        "location": params["location"],
-        "description": params["description"],
+        "location": params.get("location", "Madrid"),
+        "description": params.get("description", "200€"),
         "start": {
             "dateTime": params["start"]["dateTime"],
             "timeZone": params.get("timezone", "Europe/Madrid"),
@@ -47,12 +47,12 @@ def create_event_api(params, calendar_window=None):
             "dateTime": params["end"]["dateTime"],
             "timeZone": params.get("timezone", "Europe/Madrid"),
         },
-        "transparency": params["transparency"],
+        "transparency": params.get("transparency", "opaque"),  # 'opaque' o 'transparent'
         "extendedProperties": {
             "private": {
-                "company": params["company"],
-                "task": params.get("task", "Sin tarea"),  # Asegúrate de incluir "task"
-                "color": params["color"]
+                "company": params.get("company", "VISUALMAX S.L."),
+                "task": params.get("task", "Técnico de video"),  # Asegúrate de incluir "task"
+                "color": params.get("color", "#ba3a3a")
             }
         }
     }
