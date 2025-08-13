@@ -13,7 +13,6 @@ from PyQt6.QtWidgets import (
 )
 from PyQt6.QtCore import Qt, QDate, QTime
 from PyQt6.QtGui import QTextCharFormat, QColor, QTextCursor, QIcon
-from selenium.webdriver.common.by import By
 
 from calendar_api_setting.calendar_api import get_credentials, create_event_api, get_events, get_events_by_month, delete_event_api, edit_event_api, refresh_calendar
 from config import EMAIL_ADDRESS, EXCEL_FILE_PATH
@@ -29,15 +28,8 @@ from utils.excel_utils import load_dataframe
 from utils.event_handler import confirm_event, reject_event
 from utils.file_utils import select_files, clear_whatsapp_message 
 from utils.gui_utils import create_button
-<<<<<<< Updated upstream
-from utils.whatsapp_utils import send_wpp, update_chat_content, confirm_wpp, load_chats, load_and_display_data, reject_wpp
-from models.chat_parser import load_chats, is_relevant_message, extract_relevant_messages, nlp
-from utils.whatsapp_utils import clear_whatsapp_message
-
-=======
 from utils.whatsapp_utils import send_wpp, update_chat_content, load_chats, load_and_display_data, process_chat, confirm_wpp, reject_wpp
 from models.chat_parser import load_chats, is_relevant_message, extract_relevant_messages, nlp
->>>>>>> Stashed changes
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -50,13 +42,8 @@ class MainWindow(QMainWindow):
         self.setGeometry(100, 100, 800, 600)
         self.setStyleSheet("background-color: #212121;")
         
-<<<<<<< Updated upstream
         # Widgets necesarios para WhatsApp
         self.chat_content = QTextEdit()  
-        self.chat_content.setReadOnly(True)
-        self.chat_content.setStyleSheet("QTextEdit { background-color: #333333; color: white; }")
-        
-=======
         #Widgets necesarios para WhatsApp
         self.chat_content = QTextBrowser()
         self.chat_content.setReadOnly(True)
@@ -74,7 +61,6 @@ class MainWindow(QMainWindow):
             }
         """)
                     
->>>>>>> Stashed changes
         # Campo de destinatario
         self.destination_input = QLineEdit()
         self.destination_input.setPlaceholderText("Destinatario seleccionado")
@@ -225,6 +211,7 @@ class MainWindow(QMainWindow):
     def create_main_screen(self):
         screen = QWidget()
         screen.setStyleSheet("background-color: #112211;")
+        
         main_layout = QVBoxLayout()
 
         # Título Historial
@@ -233,10 +220,11 @@ class MainWindow(QMainWindow):
         main_layout.addWidget(title_label)
 
         # Lista de chats superior (historial)
-        self.chat_list = self.create_chat_list(update_chat_content)
         chat_layout = QHBoxLayout()
+        self.chat_list = self.create_chat_list(update_chat_content)
         chat_layout.addWidget(self.chat_list)
         chat_layout.addWidget(self.chat_content)
+        
         main_layout.addLayout(chat_layout)
 
         # Sección de envío
@@ -245,30 +233,36 @@ class MainWindow(QMainWindow):
 
         # Botones de acción
         button_layout = QVBoxLayout()
-        
-        # Grupo de confirmar/rechazar
         confirm_reject_layout = QHBoxLayout()
         confirm_reject_layout.addWidget(self.btn_confirm)
         confirm_reject_layout.addWidget(self.btn_reject)
         button_layout.addLayout(confirm_reject_layout)
 
         # Botones de navegación
-        nav_buttons = [
-            self.btn_email,
-            self.btn_calendar,
-            self.btn_gestion,
-            self.btn_test, 
-            self.btn_exit
-        ]
-        
+        nav_buttons = [self.btn_email, self.btn_calendar, self.btn_gestion, self.btn_test, self.btn_exit]
         nav_layout = QHBoxLayout()
         for btn in nav_buttons:
             nav_layout.addWidget(btn)
         button_layout.addLayout(nav_layout)
-
+        
         main_layout.addLayout(button_layout)
+        
         screen.setLayout(main_layout)
         return screen
+    
+    def update_chat_content(main_window, current_item, list_widget):
+        if current_item:
+            selected_chat_name = current_item.text()
+            for chat in main_window.chats:
+                if chat["nombre"] == selected_chat_name:
+                    # Validar que los mensajes tengan los campos necesarios
+                    valid_messages = [
+                        msg for msg in chat.get("messages", [])
+                        if isinstance(msg, dict) and "date" in msg and "message" in msg
+                    ]
+                    formatted_chat = process_chat(valid_messages, main_window.calendar_window)
+                    main_window.chat_content.setHtml(formatted_chat)
+                    break
  
     def show_test_dialog(self):
         """Mostrar diálogo para mensajes de prueba."""
@@ -296,8 +290,7 @@ class MainWindow(QMainWindow):
             "date": formatted_date,
             "time": formatted_time,
             "sender": "Test User",
-            "message": message_text,
-            "color": "#4CAF50"
+            "message": message_text
         }
         
         test_chat_name = "Test Chat"
@@ -319,28 +312,28 @@ class MainWindow(QMainWindow):
         
     def handle_chat_action(self, url):
         try:
-            print(url)
             url_str = url.toString()
-            
-            # Validar que tenga '://' y no esté vacío
             if '://' not in url_str:
-                print(url)
-                raise ValueError(f"URL inválido: {url_str}")
+                raise ValueError(f"URL inválida: {url_str}")
             
             action, date_str = url_str.split('://', 1)
             
-            # Validar que date_str sea una fecha válida
-            if not re.match(r'\d{4}-\d{2}-\d{2}', date_str):
+            # Validar formato de fecha
+            if not re.match(r'\d{2}-\d{2}-\d{4}t\d{2}\.\d{2}', date_str):
                 raise ValueError(f"Fecha inválida: {date_str}")
             
-            # Convertir a objeto date
-            date = datetime.strptime(date_str, "%Y-%m-%d-%H-%M")
-            
-            # Manejar acciones
+            print("Fecha y acción extraídas:", date_str, action)
+            date = datetime.strptime(date_str, "%d-%m-%Yt%H.%M").date()
+            print(f"Fecha extraída: {date}")
             if action == 'confirm':
                 confirm_event(self.calendar_window, date)
             elif action == 'reject':
-                reject_event()
+                reject_event(self.calendar_window)
+            current_item = self.chat_list.currentItem()
+            if current_item:
+                from utils.whatsapp_utils import update_chat_content # Importar si es necesario
+                update_chat_content(self, current_item, self.chat_list)
+                
         except Exception as e:
             show_error_dialog(self, "Error", f"Error al procesar acción: {str(e)}")
         
