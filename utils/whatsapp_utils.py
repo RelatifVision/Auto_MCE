@@ -1,3 +1,5 @@
+ # feature/ai_color_modify_relevant_message
+
 import os
 import datetime
 from datetime import datetime as dttime, date as dt, time as dt_time, timedelta
@@ -10,11 +12,13 @@ from models.chat_parser import (
 )
 from utils.common_functions import show_info_dialog, show_error_dialog
 from utils.event_handler import confirm_event, reject_event
+from models.chat_parser import extract_relevant_messages, generate_summary
+from utils.gui_utils import create_button
+from utils.styles import BUTTON_STYLE, ICON_DIR
+from utils.file_utils import select_files, clear_whatsapp_message
+from models.chat_parser import load_chats, highlight_keywords, process_chat
 
 def load_and_display_data(main_window):
-    """
-    Cargar y mostrar los datos de los chats.
-    """
     try:
         main_window.chats = load_chats()
         main_window.chat_list.clear()
@@ -244,6 +248,11 @@ def create_event_from_message(message, calendar_window):
         return True, "Evento creado exitosamente"
     else:
         return False, "No hay disponibilidad en ese horario"
+      
+                # Pasar solo los mensajes, no todo el chat
+                formatted_chat = process_chat(chat["messages"])  
+                main_window.chat_content.setHtml(formatted_chat)  
+                break
 
 def send_wpp(main_window):
     # 1. Obtener el texto del mensaje
@@ -280,7 +289,6 @@ def reject_wpp(main_window):
         "Lamentablemente no hay disponibilidad para esas fechas. ¿Desea programar para otra fecha?"
     )
 
-def clear_whatsapp_message(chat_list, compose_area, attach_list):
-    chat_list.setCurrentRow(-1) # Deseleccionar item en la lista de chats
+def clear_whatsapp_message(chat_list, compose_area, attach_list)
     compose_area.clear()
     attach_list.clear()
