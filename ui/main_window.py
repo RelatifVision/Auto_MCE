@@ -185,13 +185,9 @@ class MainWindow(QMainWindow):
         buttons_layout.addWidget(btn_attach)
         
         # Botón Borrar
-        btn_delete = create_button(
-            " Borrar",
-            "papelera.png",
-            lambda: clear_whatsapp_message(
-                chat_list=self.chat_list_send,
-                compose_area=self.message_input,
-                attach_list=self.attach_list
+        btn_delete = create_button(" Borrar", "papelera.png", lambda: clear_whatsapp_message(
+                self.message_input,
+                self.attach_list
             ),
             fixed_size=(120, 40)
         )
