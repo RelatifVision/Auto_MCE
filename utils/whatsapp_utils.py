@@ -246,10 +246,29 @@ def create_event_from_message(message, calendar_window):
         return False, "No hay disponibilidad en ese horario"
 
 def send_wpp(main_window):
+    # 1. Obtener el texto del mensaje
     message = main_window.message_input.toPlainText()
     selected_chat = main_window.chat_list_send.currentItem()
     destinatario = selected_chat.text() if selected_chat else "Sin destinatario"
-    show_info_dialog("Mensaje preparado", f"Mensaje listo para enviar a '{destinatario}':\n\n{message}")
+    
+    # Acceder directamente al QListWidget de adjuntos
+    attached_files_list_widget = main_window.attach_list 
+    attached_files = []
+    for i in range(attached_files_list_widget.count()):
+        item = attached_files_list_widget.item(i)
+        attached_files.append(item.text())
+    
+    
+    message_text = f"El mensaje:\n\n{message}"
+    
+    
+    if attached_files:
+        files_str = "\n- " + "\n- ".join(attached_files)
+        message_text += f"\n\nArchivos adjuntos:{files_str}"
+    
+    message_text += f"\n\nSerá enviado a '{destinatario}' por WhatsApp.\nAPIs de Meta no están disponibles."
+    
+    show_info_dialog(main_window, "Mensaje preparado", message_text)
 
 def confirm_wpp(main_window):
     main_window.message_input.setText(
@@ -261,7 +280,7 @@ def reject_wpp(main_window):
         "Lamentablemente no hay disponibilidad para esas fechas. ¿Desea programar para otra fecha?"
     )
 
-# def clear_whatsapp_message(chat_list, compose_area, attach_list):
-#     chat_list.setCurrentRow(-1)
-#     compose_area.clear()
-#     attach_list.clear()
+def clear_whatsapp_message(chat_list, compose_area, attach_list):
+    chat_list.setCurrentRow(-1) # Deseleccionar item en la lista de chats
+    compose_area.clear()
+    attach_list.clear()
